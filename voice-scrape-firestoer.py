@@ -5,7 +5,7 @@ from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 import subprocess
 from google.cloud import firestore
-import tempfile  # Import tempfile module for cross-platform temp directory
+import tempfile  # Import tempfile module for cross-plgcloud auth loginatform temp directory
 
 # Initialize Firestore client
 db = firestore.Client()
