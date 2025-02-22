@@ -1,0 +1,14 @@
+poetry init           # Create pyproject.toml interactively
+poetry add            # Add a dependency
+poetry install        # Install dependencies & make a venv
+poetry env activate (then copy paste output)  # Enter the virtual environment
+poetry build          # Build package for distribution
+poetry publish        # Publish to PyPI
+
+sometimes need to switch the python interpreter
+
+
+obscure notes:
+
+poetry env info --path
+
