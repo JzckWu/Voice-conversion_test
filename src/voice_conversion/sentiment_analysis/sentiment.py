@@ -1,19 +1,17 @@
+import speech_recognition as sr
 import sounddevice as sd
 import soundfile as sf
 import numpy as np
-import whisper
 from transformers import pipeline
 import pyttsx3
 import threading
 
-model = whisper.load_model("base")
-
+# Initialize speech recognizer and classifier
+recognizer = sr.Recognizer()
 classifier = pipeline("text-classification", model="Panda0116/emotion-classification-model")
-
 engine = pyttsx3.init()
 
 label_map = {0: 'Sadness', 1: 'Joy', 2: 'Love', 3: 'Anger', 4: 'Fear', 5: 'Surprise'}
-
 recording = False
 
 def record_audio(fs):
@@ -34,20 +32,29 @@ def wait_for_enter():
     input()
     recording = False
 
+def transcribe_audio(file_path):
+    with sr.AudioFile(file_path) as source:
+        audio_data = recognizer.record(source)
+        try:
+            return recognizer.recognize_google(audio_data)
+        except sr.UnknownValueError:
+            print("Could not understand the audio.")
+        except sr.RequestError:
+            print("API request failed.")
+    return ""
+
 def main():
     global recording
-    fs = 16000  
+    fs = 16000
 
     recording = True
     input_thread = threading.Thread(target=wait_for_enter)
     input_thread.start()
 
     audio = record_audio(fs)
-
     sf.write("input.wav", audio, fs)
 
-    result = model.transcribe("input.wav")
-    text = result["text"]
+    text = transcribe_audio("input.wav")
     print(f"Transcribed Text: {text}")
 
     if text:
@@ -62,7 +69,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-
-
-
