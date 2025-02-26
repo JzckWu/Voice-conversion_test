@@ -7,8 +7,18 @@ poetry publish        # Publish to PyPI
 
 sometimes need to switch the python interpreter
 
+using Firebase Explorer extension:
+cmd + shift + p and paste ext install jsayol.firebase-explorer
+
+go through fishaudio inference file to download checkpoints etc
+
+to run modules
+python -m voice_initiation.voice_scrape
+
 
 obscure notes:
 
 poetry env info --path
+
+switch from poetry to uv
 
